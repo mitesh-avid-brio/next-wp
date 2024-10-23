@@ -1,11 +1,19 @@
 // lib/woocommerce.ts
 import WooCommerceRestApi from '@woocommerce/woocommerce-rest-api';
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const consumerKey = process.env.NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY;
+const consumerSecret = process.env.NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET;
+
+if (!apiUrl || !consumerKey || !consumerSecret) {
+  throw new Error('WooCommerce API configuration is missing. Please check your environment variables.');
+}
+
 const api = new WooCommerceRestApi({
-  url: process.env.NEXT_PUBLIC_API_URL, // Your store URL
-  consumerKey: process.env.WOOCOMMERCE_CONSUMER_KEY, // Your consumer key
-  consumerSecret: process.env.WOOCOMMERCE_CONSUMER_SECRET, // Your consumer secret
-  version: 'wc/v3', // WooCommerce version
+  url: apiUrl,
+  consumerKey,
+  consumerSecret,
+  version: 'wc/v3',
 });
 
 export default api;

@@ -6,7 +6,6 @@ export const fetchProducts = async () => {
     const response = await api.get("products");
     return response.data; // Return the products data
   } catch (error) {
-    console.error(error.response.data); // Log any errors
     throw error; // Rethrow the error for handling in components
   }
 };
@@ -17,7 +16,6 @@ export const fetchProductById = async (slug: string) => {
     const response = await api.get(`products/${slug}`);
     return response.data; // Return the specific product data
   } catch (error) {
-    console.error(error.response.data); // Log any errors
     throw error; // Rethrow the error for handling in components
   }
 };

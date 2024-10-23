@@ -1,55 +1,26 @@
 // ProductTabs.tsx
 'use client';
 
-export const Tabs = ({ children, defaultValue }) => {
-  return (
-    <div className="tabs" data-default-value={defaultValue}>
-      {children}
-    </div>
-  );
-};
+import React from 'react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@radix-ui/react-tabs'; // Adjust according to your tab component library
+import { Card } from './Card'; // Adjust the import path for your Card components
+import { CardContent } from './CardContent'; // Adjust the import path for your Card components
 
-export const TabsList = ({ children, className }) => {
-  return (
-    <div className={`flex space-x-4 ${className}`}>
-      {children}
-    </div>
-  );
-};
+interface ProductTabsProps {
+  product: {
+    description: string;
+    attributes?: Array<{
+      id: string;
+      name: string;
+      options?: Array<{
+        id: string;
+        name: string;
+      }>;
+    }>;
+  };
+}
 
-export const TabsTrigger = ({ value, children }) => {
-  return (
-    <button className="tab-trigger p-2 hover:bg-gray-200 rounded">
-      {children}
-    </button>
-  );
-};
-
-export const TabsContent = ({ value, children }) => {
-  return (
-    <div className={`tab-content mt-4`}>
-      {children}
-    </div>
-  );
-};
-
-const Card = ({ children }) => {
-  return (
-    <div className="border rounded-lg shadow-md p-4">
-      {children}
-    </div>
-  );
-};
-
-const CardContent = ({ children }) => {
-  return (
-    <div className="card-content">
-      {children}
-    </div>
-  );
-};
-
-export default function ProductTabs({ product }) {
+export default function ProductTabs({ product }: ProductTabsProps) {
   return (
     <Tabs defaultValue="description" className="mt-12">
       <TabsList className="w-full justify-start border-b">
@@ -57,7 +28,7 @@ export default function ProductTabs({ product }) {
         <TabsTrigger value="specifications">Specifications</TabsTrigger>
         <TabsTrigger value="reviews">Reviews</TabsTrigger>
       </TabsList>
-      
+
       <TabsContent value="description" className="mt-6">
         <Card>
           <CardContent className="pt-6">
@@ -65,7 +36,7 @@ export default function ProductTabs({ product }) {
           </CardContent>
         </Card>
       </TabsContent>
-      
+
       <TabsContent value="specifications" className="mt-6">
         <Card>
           <CardContent className="pt-6">
@@ -86,7 +57,7 @@ export default function ProductTabs({ product }) {
           </CardContent>
         </Card>
       </TabsContent>
-      
+
       <TabsContent value="reviews" className="mt-6">
         <Card>
           <CardContent className="pt-6">

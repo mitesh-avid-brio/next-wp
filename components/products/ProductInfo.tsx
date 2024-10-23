@@ -12,7 +12,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function ProductInfo({ product }) {
+
+interface Product {
+  id: number; // or string if it's a string ID
+  name: string;
+  price: number; // or whatever type your price is
+  description?: string; // optional property
+  images: { src: string; alt: string }[]; // Example for images, adjust as necessary
+  regular_price:number,
+  short_description:string
+}
+
+
+interface ProductInfoProps {
+  product: Product; // Use the Product type
+}
+
+export default function ProductInfo({ product }:ProductInfoProps ) {
   const [quantity, setQuantity] = useState(1);
 
 
@@ -33,29 +49,6 @@ export default function ProductInfo({ product }) {
       <div className="text-gray-600">
         <div dangerouslySetInnerHTML={{ __html: product.short_description }} />
       </div>
-
-      {/* {product.variations && (
-        <div className="space-y-4">
-          {Object.entries(product.attributes).map(([name, options]) => (
-            <div key={name}>
-              <label className="block text-sm font-medium mb-2">{name}</label>
-              <Select>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder={`Select ${name}`} />
-                </SelectTrigger>
-                <SelectContent>
-                  {options?.map((option) => (
-                    <SelectItem key={option} value={option}>
-                      {option}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          ))}
-        </div>
-      )} */}
-
       <div>
         <label className="block text-sm font-medium mb-2">Quantity</label>
         <div className="flex items-center gap-2">

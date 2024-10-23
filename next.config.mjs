@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "arrangespy.s3-tastewp.com",
+        hostname: process.env.NEXT_PUBLIC_API_URL,
         port: "",
         pathname: "/**",
       },
