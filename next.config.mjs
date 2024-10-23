@@ -3,8 +3,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "localhost",
+        protocol: "https",
+        hostname: "arrangespy.s3-tastewp.com",
         port: "",
         pathname: "/**",
       },
