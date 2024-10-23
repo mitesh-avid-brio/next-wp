@@ -1,8 +1,17 @@
 import { getPageBySlug } from "@/lib/wordpress";
-import { Section, Container, Main } from "@/components/craft";
+import { Section, Container } from "@/components/craft";
 import { Metadata } from "next";
-
 import BackButton from "@/components/back";
+
+// Sample structured data (JSON-LD) for a product
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: "Hello Product", // Update with actual product name
+  image: "https://example.com/image.jpg", // Update with actual image URL
+  description: "Description of the hello product.", // Update with actual product description
+  // You can add more properties as needed
+};
 
 export async function generateMetadata({
   params,
@@ -10,9 +19,10 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const page = await getPageBySlug(params.slug);
+
   return {
-    title: page.title.rendered,
-    description: page.excerpt.rendered,
+    title: page.yoast_head_json.title,
+    description: page.yoast_head_json.description,
   };
 }
 
@@ -21,6 +31,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <Section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Container>
         <BackButton />
         <h1 className="pt-12">{page.title.rendered}</h1>

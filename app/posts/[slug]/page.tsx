@@ -27,6 +27,9 @@ export async function generateMetadata({
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const post = await getPostBySlug(params.slug);
+
+  console.log("params.slug",params.slug)
+
   const featuredMedia = await getFeaturedMediaById(post.featured_media);
   const author = await getAuthorById(post.author);
   const date = new Date(post.date).toLocaleDateString("en-US", {

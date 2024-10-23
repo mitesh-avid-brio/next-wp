@@ -6,7 +6,7 @@ import Balancer from "react-wrap-balancer";
 import Link from "next/link";
 
 // Icons
-import { File, Pen, Tag, Boxes, User, Folder } from "lucide-react";
+import { File, Pen, Tag, Boxes, User, Folder,ShoppingBag } from "lucide-react";
 
 // This page is using the craft.tsx component and design system
 export default function Home() {
@@ -51,7 +51,20 @@ const ExampleJsx = () => {
         typesafety is handled in <code>lib/WordPress.ts</code> and{" "}
         <code>lib/WordPress.d.ts</code>. Questions? Email 9d8dev@gmail.com
       </p>
-      <div className="grid md:grid-cols-3 gap-4 mt-6 not-prose">
+      <div className="grid md:grid-cols-3 gap-4 mt-6 not-prose">     <Link
+          className="border h-48 bg-accent/50 rounded-lg p-4 flex flex-col justify-between hover:scale-[1.02] transition-all"
+          href="/shop"
+        >
+          <ShoppingBag size={32} />
+          <span>
+            All Products{" "}
+            <span className="block text-sm text-muted-foreground">
+              All Products from your WordPress
+            </span>
+          </span>
+        </Link>
+
+
         <Link
           className="border h-48 bg-accent/50 rounded-lg p-4 flex flex-col justify-between hover:scale-[1.02] transition-all"
           href="/posts"

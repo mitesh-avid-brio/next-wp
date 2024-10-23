@@ -3,6 +3,7 @@
 // Types are imported from `wp.d.ts`
 
 import querystring from 'query-string'
+import axios from 'axios';
 
 import {
   Post,
@@ -20,7 +21,7 @@ const baseUrl = process.env.WORDPRESS_URL;
 function getUrl(path: string, query?: Record<string, any>) {
     const params = query ? querystring.stringify(query) : null
   
-    return `${baseUrl}${path}${params ? `?${params}` : ""}`
+    return `${baseUrl}${path}${params ? `?${params}` : ""}` 
 }
 
 // WordPress Functions
@@ -32,6 +33,7 @@ export async function getAllPosts(filterParams?: {
 }): Promise<Post[]> {  
   const url = getUrl("/wp-json/wp/v2/posts", { author: filterParams?.author, tags: filterParams?.tag, categories: filterParams?.category });
   const response = await fetch(url);
+  console.log("response",response)
   const posts: Post[] = await response.json();
   return posts;
 }
@@ -116,6 +118,7 @@ export async function getTagBySlug(slug: string): Promise<Tag> {
 export async function getAllPages(): Promise<Page[]> {
   const url = getUrl("/wp-json/wp/v2/pages");
   const response = await fetch(url);
+  console.log("response",response)
   const pages: Page[] = await response.json();
   return pages;
 }
@@ -123,6 +126,8 @@ export async function getAllPages(): Promise<Page[]> {
 export async function getPageById(id: number): Promise<Page> {
   const url = getUrl(`/wp-json/wp/v2/pages/${id}`);
   const response = await fetch(url);
+  console.log("response",response)
+
   const page: Page = await response.json();
   return page;
 }
@@ -130,7 +135,10 @@ export async function getPageById(id: number): Promise<Page> {
 export async function getPageBySlug(slug: string): Promise<Page> {
   const url = getUrl("/wp-json/wp/v2/pages", { slug });
   const response = await fetch(url);
+
   const page: Page[] = await response.json();
+  // console.log("response",page[0])
+
   return page[0];
 }
 
@@ -196,3 +204,6 @@ export async function getFeaturedMediaById(id: number): Promise<FeaturedMedia> {
   const featuredMedia: FeaturedMedia = await response.json();
   return featuredMedia;
 }
+
+
+

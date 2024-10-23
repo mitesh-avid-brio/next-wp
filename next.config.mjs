@@ -3,8 +3,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: process.env.WORDPRESS_HOSTNAME,
+        protocol: "http",
+        hostname: "localhost",
         port: "",
         pathname: "/**",
       },
