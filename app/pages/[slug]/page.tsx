@@ -21,8 +21,10 @@ export async function generateMetadata({
   const page = await getPageBySlug(params.slug);
 
   return {
-    title: page.yoast_head_json.title,
-    description: page.yoast_head_json.description,
+    title: "hello world",
+
+    // title: page.yoast_head_json.title,
+    // description: page.yoast_head_json.description,
   };
 }
 
