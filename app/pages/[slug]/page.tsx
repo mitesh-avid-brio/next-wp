@@ -22,9 +22,6 @@ export async function generateMetadata({
 
   return {
     title: "hello world",
-
-    // title: page.yoast_head_json.title,
-    // description: page.yoast_head_json.description,
   };
 }
 
