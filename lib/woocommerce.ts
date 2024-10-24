@@ -14,6 +14,7 @@ const api = new WooCommerceRestApi({
   consumerKey,
   consumerSecret,
   version: 'wc/v3',
+  queryStringAuth:true
 });
 
 export default api;

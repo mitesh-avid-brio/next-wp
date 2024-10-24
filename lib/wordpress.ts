@@ -18,9 +18,13 @@ import {
 
 const baseUrl = process.env.WORDPRESS_URL;
 
+console.log("baseUrl1111",baseUrl)
+
 function getUrl(path: string, query?: Record<string, any>) {
     const params = query ? querystring.stringify(query) : null
   
+    console.log("baseUr",baseUrl)
+
     return `${baseUrl}${path}${params ? `?${params}` : ""}` 
 }
 
@@ -33,14 +37,74 @@ export async function getAllPosts(filterParams?: {
 }): Promise<Post[]> {  
   const url = getUrl("/wp-json/wp/v2/posts", { author: filterParams?.author, tags: filterParams?.tag, categories: filterParams?.category });
   const response = await fetch(url);
-  console.log("response",response)
   const posts: Post[] = await response.json();
+  console.log("response 1",posts)
+
   return posts;
 }
+
+
+// ACF
+
+export async function getAllMovies(filterParams?: {
+  author?: string;
+  tag?: string;
+  category?: string;
+}): Promise<any[]> {
+  // Construct the URL for the movie API, you can add filters for author, tags, or categories if needed.
+  const url = getUrl("/wp-json/wp/v2/movies", {
+    author: filterParams?.author,
+    tags: filterParams?.tag,
+    categories: filterParams?.category,
+  });
+
+  // Fetch the movie data from the API.
+  const response = await fetch(url);
+
+  // Parse the response as JSON.
+  const movies: any[] = await response.json();
+  
+  // Log the response to the console.
+  console.log("Movies Data:", movies);
+
+  // Return the movies data.
+  return movies;
+}
+
+
+// Define a PaymentGateway interface based on the expected API response structure
+interface PaymentGateway {
+  id: string;
+  name: string;
+  type: string;
+  supported_currencies: string[];
+  enabled: boolean;
+}
+
+// Function to get all payment gateway information
+export async function getAllPaymentInfo(): Promise<PaymentGateway[]> {
+  const url = getUrl("/wp-json/wc/v3/payment_gateways");
+
+  console.log("URL",url)
+
+  const response = await fetch(url);
+  
+  console.log(response,"respons")
+
+  // Ensure the response is valid JSON
+  if (!response.ok) {
+    throw new Error(`Error fetching payment gateways: ${response.statusText}`);
+  }
+
+  const paymentGateways: PaymentGateway[] = await response.json();
+  return paymentGateways;
+}
+
 
 export async function getPostById(id: number): Promise<Post> {
   const url = getUrl(`/wp-json/wp/v2/posts/${id}`);
   const response = await fetch(url);
+  console.log("response 2",response)
   const post: Post = await response.json();
   return post;
 }
@@ -48,7 +112,11 @@ export async function getPostById(id: number): Promise<Post> {
 export async function getPostBySlug(slug: string): Promise<Post> {
   const url = getUrl("/wp-json/wp/v2/posts", { slug });
   const response = await fetch(url);
+
   const post: Post[] = await response.json();
+  console.log("post 2",post[0])
+
+
   return post[0];
 }
 

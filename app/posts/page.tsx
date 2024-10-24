@@ -3,6 +3,7 @@ import {
   getAllAuthors,
   getAllTags,
   getAllCategories,
+  getAllMovies,
 } from "@/lib/wordpress";
 
 import {
@@ -25,6 +26,9 @@ export default async function Page({
 }) {
   const { author, tag, category, page: pageParam } = searchParams;
   const posts = await getAllPosts({ author, tag, category });
+
+  const movies = await getAllMovies()
+
   const authors = await getAllAuthors();
   const tags = await getAllTags();
   const categories = await getAllCategories();
