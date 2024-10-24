@@ -17,7 +17,7 @@ import {
 // WordPress Config
 
 
-const baseUrl = process.env.BASE_URL || "https://arrangespy.s3-tastewp.com";
+const baseUrl = process.env.WORDPRESS_URL || "https://arrangespy.s3-tastewp.com";
 
 function getUrl(path: string, query?: Record<string, any>) {
   const params = query ? querystring.stringify(query) : null;
