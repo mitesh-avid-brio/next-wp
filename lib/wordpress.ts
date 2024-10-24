@@ -16,17 +16,50 @@ import {
 
 // WordPress Config
 
-const baseUrl = process.env.WORDPRESS_URL;
 
-console.log("baseUrl1111",baseUrl)
+const baseUrl = process.env.BASE_URL || "https://arrangespy.s3-tastewp.com";
 
 function getUrl(path: string, query?: Record<string, any>) {
-    const params = query ? querystring.stringify(query) : null
-  
-    console.log("baseUr",baseUrl)
+  const params = query ? querystring.stringify(query) : null;
 
-    return `${baseUrl}${path}${params ? `?${params}` : ""}` 
+  console.log("baseUrl", baseUrl);
+
+  return `${baseUrl}${path}${params ? `?${params}` : ""}`; 
 }
+
+
+
+// Define a PaymentGateway interface based on the expected API response structure
+interface PaymentGateway {
+  id: string;
+  name: string;
+  type: string;
+  supported_currencies: string[];
+  enabled: boolean;
+}
+
+// Function to get all payment gateway information
+export async function getAllPaymentInfo(): Promise<PaymentGateway[]> {
+  const url = getUrl("/wp-json/wc/v3/payment_gateways");
+
+  console.log("URL",url)
+
+  const response = await fetch(url);
+  
+  console.log(response,"respons")
+
+  // Ensure the response is valid JSON
+  if (!response.ok) {
+    throw new Error(`Error fetching payment gateways: ${response.statusText}`);
+  }
+
+  const paymentGateways: PaymentGateway[] = await response.json();
+  return paymentGateways;
+}
+
+
+
+
 
 // WordPress Functions
 
@@ -71,34 +104,6 @@ export async function getAllMovies(filterParams?: {
   return movies;
 }
 
-
-// Define a PaymentGateway interface based on the expected API response structure
-interface PaymentGateway {
-  id: string;
-  name: string;
-  type: string;
-  supported_currencies: string[];
-  enabled: boolean;
-}
-
-// Function to get all payment gateway information
-export async function getAllPaymentInfo(): Promise<PaymentGateway[]> {
-  const url = getUrl("/wp-json/wc/v3/payment_gateways");
-
-  console.log("URL",url)
-
-  const response = await fetch(url);
-  
-  console.log(response,"respons")
-
-  // Ensure the response is valid JSON
-  if (!response.ok) {
-    throw new Error(`Error fetching payment gateways: ${response.statusText}`);
-  }
-
-  const paymentGateways: PaymentGateway[] = await response.json();
-  return paymentGateways;
-}
 
 
 export async function getPostById(id: number): Promise<Post> {
